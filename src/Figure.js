@@ -21,11 +21,12 @@ const Figure = ({ src, arWidth, arHeight, children }) => {
   useEffect(() => {
     setIsLoading(true);
     fetch(src)
-      .then(response =>{
-        setImg(response.url);
+      .then(response => response.blob())
+      .then(blob => {
+        const imageUrl = URL.createObjectURL(blob);
+        setImg(imageUrl);
         setIsLoading(false);
       })
-      
       .catch(() => {
         setIsLoading(false);
         setIsError(true);
